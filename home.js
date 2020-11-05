@@ -6,8 +6,14 @@ ctx.canvas.height = window.innerHeight - 10;
 
 var player = document.getElementById("player");
 
-var playerImage = new Image();
-playerImage.src = "sprites/player.png"
+var playerImageRight = new Image();
+playerImageRight.src = "sprites/wizardright.png";
+var playerImageLeft = new Image();
+playerImageLeft.src = "sprites/wizardleft.png";
+var lastPlayerMovement = playerImageRight;
+
+var playerAttackImage = new Image();
+playerAttackImage.src = "sprites/attack.png";
 
 var playerLocationX = 800;
 var playerLocationY = 400;
@@ -15,7 +21,10 @@ var playerLocationY = 400;
 var playerMovementX = 0;
 var playerMovementY = 0;
 
-var playerMovementSpeed = 13;
+var playerMovementSpeed = 17;
+
+var playerAttack = 0;
+
 
 function Body_KeyDown(args) {
 
@@ -35,6 +44,9 @@ function Body_KeyDown(args) {
         case 100:
         case 68: // D
             playerMovementX = 1
+            break;
+        case 32:
+            playerAttack = 4;
             break;
         default:
             console.log(args.which);
@@ -92,7 +104,25 @@ function Render() {
     playerLocationX = (playerMovementX * playerMovementSpeed) + playerLocationX;
     playerLocationY = (playerMovementY * playerMovementSpeed) + playerLocationY;
 
-    ctx.drawImage(playerImage, playerLocationX, playerLocationY, 80, 80);
+    if (playerMovementX > 0) {
+        lastPlayerMovement = playerImageRight;
+    }
+    else if (playerMovementX < 0) {
+        lastPlayerMovement = playerImageLeft;
+    }
+    ctx.drawImage(lastPlayerMovement, playerLocationX, playerLocationY, 80, 80);
+
+    if (playerAttack > 0) {
+
+        if (playerMovementX > 0) {
+            ctx.drawImage(playerAttackImage, playerLocationX + 70, playerLocationY, 180, 80);
+        }
+        else if (playerMovementX < 0) {
+            ctx.drawImage(playerAttackImage, playerLocationX - 180, playerLocationY, 180, 80);        
+        }
+
+       playerAttack--;
+    }
 
     setTimeout(() => {
         Render();
