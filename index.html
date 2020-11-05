@@ -3,12 +3,11 @@
     <head>
         <link rel="stylesheet" href="style.css"/>
     </head>
-    <body onkeypress="Body_KeyPressed(event)">
+    <body onkeyup="Body_KeyUp(event)" onkeydown="Body_KeyDown(event)">
 
-        <canvas id="playarea"  onclick="Body_Clicked(event)">
+        <canvas id="playarea">
             
         </canvas>
-        <div id="player"></div>
 
         <script src="home.js"></script>
     </body>
