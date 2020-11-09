@@ -61,6 +61,10 @@ class Zombies {
         return {scoreChange, crystalDamage};
     }
 
+    ResetZombies() {
+        this.zombies = Array();
+    }
+
     RenderAllZombies() {
 
         for (var i = 0; i < this.zombies.length; i++) {
@@ -102,9 +106,11 @@ class Zombie extends GameObject {
 
         if (this.zombieLocationX > 1020) { //crystalLocationX
             this.zombieLocationX -= this.zombieMovementSpeed;
+            this.lastzombieMovement = this.zombieImageLeft;
         }
         else if (this.zombieLocationX < 880) {
             this.zombieLocationX += this.zombieMovementSpeed;
+            this.lastzombieMovement = this.zombieImageRight;
         }
         else {
             crystalDamage += 0.5;

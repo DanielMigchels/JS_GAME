@@ -100,6 +100,23 @@ class Player extends GameObject {
         }
     }
 
+    ResetPlayer() {
+        this.playerLocationX = 800;
+        this.playerLocationY = 400;
+
+        this.playerMovementX = 0;
+        this.playerMovementY = 0;
+
+        this.playerMovementSpeed = 17;
+
+        this.playerAttack = 0;
+        this.playerAttackCooldown = 0;
+
+        this.playerRepair = 0;
+        this.playerRepairCooldown = 0;
+
+    }
+
     Render() {
         if (this.playerLocationY < 10 && this.playerMovementY == -1) {
             this.playerMovementY = 0;

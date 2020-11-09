@@ -32,6 +32,11 @@ class Crystal extends GameObject {
         }
     }
 
+    ResetCrystal() {
+        this.health = 100;
+        this.gameOver = false;
+    }
+
     Render() {
 
         ctx.drawImage(this.crystalImage, 880, 380, 200, 100);
