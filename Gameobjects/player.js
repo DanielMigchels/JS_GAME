@@ -17,7 +17,7 @@ class Player extends GameObject {
 
     playerAttack = 0;
     playerAttackCooldown = 0;
-    
+
     playerRepair = 0;
     playerRepairCooldown = 0;
 
@@ -34,18 +34,22 @@ class Player extends GameObject {
 
         switch (key.which) {
             case 119: // W
+            case 38:
             case 87:
                 this.playerMovementY = -1;
                 break;
             case 97:
+            case 37:
             case 65: // A
                 this.playerMovementX = -1;
                 break;
             case 115:
+            case 40:
             case 83: // S
                 this.playerMovementY = 1;
                 break;
             case 100:
+            case 39:
             case 68: // D
                 this.playerMovementX = 1
                 break;
@@ -65,18 +69,22 @@ class Player extends GameObject {
     HandleKeyUp(key) {
         switch (key.which) {
             case 119: // W
+            case 38:
             case 87:
                 this.playerMovementY = 0;
                 break;
             case 97:
+            case 37:
             case 65: // A
                 this.playerMovementX = 0;
                 break;
             case 115:
+            case 40:
             case 83: // S
                 this.playerMovementY = 0;
                 break;
             case 100:
+            case 39:
             case 68: // D
                 this.playerMovementX = 0;
                 break;
@@ -135,8 +143,8 @@ class Player extends GameObject {
                     ctx.drawImage(this.playerAttackImage, this.playerLocationX - 180, this.playerLocationY, 180, 80);
                 }
             }
-            
-            
+
+
         }
 
         if (this.playerAttackCooldown > 0) {

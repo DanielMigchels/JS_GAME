@@ -9,13 +9,21 @@ ctx.fillStyle = "black";
 ctx.textAlign = "center";
 
 score = 0;
+var started = false;
 
 var player = new Player(ctx);
 var crystal = new Crystal(ctx);
 var zombies = new Zombies(ctx);
 
 function Body_KeyDown(args) {
-    player.HandleKeyDown(args);
+    if (started) {
+        player.HandleKeyDown(args);
+    }
+    else {
+        Render();
+        SpawnZombie();
+        started = true;
+    }    
 }
 
 
@@ -70,9 +78,30 @@ function Render() {
     else {
         ctx.font="90px Arial";
         ctx.fillText("Game Over! Score: " + this.score, ctx.canvas.width / 2, ctx.canvas.height / 2);
+        started = false;
+
+        setTimeout(() => {
+            Initiate();
+        }, 3000);
     }
-    
 }
 
-Render();
-SpawnZombie();
+function Initiate() {
+    
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+    ctx.font="90px Arial";
+    ctx.fillText("Press any button to start! ", ctx.canvas.width / 2, ctx.canvas.height / 4);
+
+
+    ctx.font="48px Arial";
+    ctx.fillText("By Daniel Migchels", ctx.canvas.width / 2, ctx.canvas.height / 3);
+
+    ctx.fillText("Walk around with W, A, S & D", ctx.canvas.width / 2, ctx.canvas.height / 2);
+
+    ctx.fillText("Cast spells with the Space bar", ctx.canvas.width / 2, ctx.canvas.height / 1.75);
+
+    ctx.fillText("Repair the crystal by standing on it and pressing R", ctx.canvas.width / 2, ctx.canvas.height / 1.5);
+}
+
+Initiate();
