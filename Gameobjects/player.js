@@ -1,8 +1,9 @@
-class Player extends GameObject{
+class Player extends GameObject {
 
     playerImageRight = new Image();
     playerImageLeft = new Image();
     lastPlayerMovement = this.playerImageRight;
+    playerDirection = "right";
 
     playerAttackImage = new Image();
 
@@ -15,6 +16,11 @@ class Player extends GameObject{
     playerMovementSpeed = 17;
 
     playerAttack = 0;
+    playerAttackCooldown = 0;
+    
+    playerRepair = 0;
+    playerRepairCooldown = 0;
+
 
     constructor(ctx) {
         super(ctx);
@@ -43,8 +49,11 @@ class Player extends GameObject{
             case 68: // D
                 this.playerMovementX = 1
                 break;
-            case 32:
-                this.playerAttack = 4;
+            case 32: // SPACE
+                this.playerAttack = 1;
+                break;
+            case 82: // R
+                this.playerRepair = 1;
                 break;
             default:
                 console.log(key.which);
@@ -70,6 +79,12 @@ class Player extends GameObject{
             case 100:
             case 68: // D
                 this.playerMovementX = 0;
+                break;
+            case 32: // SPACE
+                this.playerAttack = 0;
+                break;
+            case 82: // R
+                this.playerRepair = 0;
                 break;
             default:
                 console.log(key.which);
@@ -99,22 +114,34 @@ class Player extends GameObject{
 
         if (this.playerMovementX > 0) {
             this.lastPlayerMovement = this.playerImageRight;
+            this.playerDirection = "right";
         }
         else if (this.playerMovementX < 0) {
             this.lastPlayerMovement = this.playerImageLeft;
+            this.playerDirection = "left";
         }
         ctx.drawImage(this.lastPlayerMovement, this.playerLocationX, this.playerLocationY, 80, 80);
 
-        if (this.playerAttack > 0) {
+        if (this.playerAttack == 1) {
 
-            if (this.lastPlayerMovement == this.playerImageRight) {
-                ctx.drawImage(this.playerAttackImage, this.playerLocationX + 70, this.playerLocationY, 180, 80);
+            if (this.playerAttackCooldown <= 0) {
+                this.playerAttackCooldown = 8;
             }
-            else if (this.lastPlayerMovement == this.playerImageLeft) {
-                ctx.drawImage(this.playerAttackImage, this.playerLocationX - 180, this.playerLocationY, 180, 80);
+            if (this.playerAttackCooldown > 4) {
+                if (this.lastPlayerMovement == this.playerImageRight) {
+                    ctx.drawImage(this.playerAttackImage, this.playerLocationX + 70, this.playerLocationY, 180, 80);
+                }
+                else if (this.lastPlayerMovement == this.playerImageLeft) {
+                    ctx.drawImage(this.playerAttackImage, this.playerLocationX - 180, this.playerLocationY, 180, 80);
+                }
             }
+            
+            
         }
 
-        this.playerAttack--;
+        if (this.playerAttackCooldown > 0) {
+            this.playerAttackCooldown--;
+        }
+
     }
 }
